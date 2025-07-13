@@ -1,4 +1,8 @@
+"""
+Guitar Class
+"""
 class Guitar:
+    """Guitar Class for storing details about a Guitar."""
     def __init__(self, name="", year=0, cost=0.0):
         self.name = name
         self.year = year
