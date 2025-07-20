@@ -15,7 +15,8 @@ FILENAME = 'projects.txt'
 
 def main():
     """Print main-menu and facilitate user input to call desired function"""
-    projects = []
+    projects = load_projects(FILENAME)
+    print(f"Loaded {len(projects)} projects from {FILENAME}")
     print(MENU)
     choice = input(">>>").upper()
     while choice != 'Q':
@@ -80,7 +81,7 @@ def filter_projects(projects):
 
 def add_project(projects):
     """Add project to the projects list through user input"""
-    print("To add a new project input the following details:")
+    print("Let's add a new project:")
     name = input("Name: ").title()
     start_date = input("Start date (dd/mm/yyyy): ")
     priority = int(input("Priority: "))
