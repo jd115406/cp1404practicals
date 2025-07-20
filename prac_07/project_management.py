@@ -11,16 +11,17 @@ MENU =  "(L)oad projects\n" \
 FILENAME = 'projects.txt'
 
 def main():
+    projects = []
     print(MENU)
     choice = input(">>>").upper()
     while choice != 'Q':
         if choice == 'L':
-            load_projects()
+            projects = load_projects(FILENAME)
             print("Project loaded")
         elif choice == 'S':
             pass
         elif choice == 'D':
-            pass
+            display_projects(projects)
         elif choice == 'F':
             pass
         elif choice == 'A':
@@ -33,18 +34,32 @@ def main():
         choice = input(">>>").upper()
     print('Goodbye')
 
-def load_projects():
+def load_projects(FILENAME):
     """Reads .txt file and return class attributes for each project"""
-    project_list = []
+    projects = []
     with open(FILENAME, 'r') as in_file:
         in_file.readline()  # Skips header line
         for line in in_file:
             parts = line.strip().split('\t')
-            name = parts[0]
-            start_date = parts[1]
             priority = int(parts[2])
             cost_estimate = float(parts[3])
             completion_percentage = float(parts[4])
-            project = Project(name, start_date, priority, cost_estimate, completion_percentage)
-            project_list.append(project)
-        return project_list
+            project = Project(parts[0], parts[1], priority, cost_estimate, completion_percentage)
+            projects.append(project)
+        return projects
+
+def display_projects(projects):
+    """Displays completed and incomplete projects"""
+    completed_projects = sorted([project for project in projects if project.completion_percentage == 100])
+    incomplete_projects = sorted([project for project in projects if project.completion_percentage < 100])
+
+    print("Completed projects:")
+    for project in completed_projects:
+        print(f"  {project}")
+
+    print("Incomplete projects:")
+    for project in incomplete_projects:
+        print(f"  {project}")
+
+if __name__ == '__main__':
+    main()
