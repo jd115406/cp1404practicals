@@ -1,4 +1,3 @@
-from prac_07 import project
 from prac_07.project import Project
 from datetime import datetime
 
