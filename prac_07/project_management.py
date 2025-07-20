@@ -24,11 +24,11 @@ def main():
         elif choice == 'D':
             display_projects(projects)
         elif choice == 'F':
-            pass
+            filter_projects(projects)
         elif choice == 'A':
-            pass
+            add_project(projects)
         elif choice == 'U':
-            pass
+            update_project(projects)
         else:
             print("Invalid choice")
         print(MENU)
@@ -63,6 +63,7 @@ def display_projects(projects):
         print(f"  {project}")
 
 def filter_projects(projects):
+    """Filters projects by projects after the user specified date"""
     start_date = input("Display projects that start after date (dd/mm/yyyy): ")
     start_date = datetime.strptime(start_date, '%d/%m/%Y').date()
     filtered_projects = sorted([project for project in projects if project.start_date >= start_date])
@@ -71,6 +72,7 @@ def filter_projects(projects):
         print(project)
 
 def add_project(projects):
+    """Add project to the projects list through user input"""
     print("To add a new project input the following details:")
     name = input("Name: ").title()
     start_date = input("Start date (dd/mm/yyyy): ")
@@ -79,6 +81,22 @@ def add_project(projects):
     completion_percentage = float(input("Completion percentage: "))
     project = Project(name, start_date, priority, cost_estimate, completion_percentage)
     projects.append(project)
+
+def update_project(projects):
+    for i, project in enumerate(projects):
+        print(f"{i}. {project}")
+    update_choice = int(input("Project choice: "))
+    selected_project = projects[update_choice]
+    print(f"Selected project: {selected_project}")
+
+    new_percentage = int(input("New percentage: "))
+    while new_percentage < 0 or new_percentage > 100:
+        print(f"Invalid percentage {new_percentage}, does not lie within 0 and 100")
+        new_percentage = int(input("New percentage: "))
+        selected_project.completion_percentage = new_percentage
+
+        new_priority = int(input("New priority: "))
+        selected_project.priority = new_priority
 
 if __name__ == '__main__':
     main()
