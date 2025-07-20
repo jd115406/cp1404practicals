@@ -1,17 +1,20 @@
 from prac_07 import project
 from prac_07.project import Project
 from datetime import datetime
-MENU =  "(L)oad projects\n" \
-        "(S)ave projects\n" \
-        "(D)isplay projects\n" \
-        "(F)ilter projects by date\n" \
-        "(A)dd new project\n" \
-        "(U)pdate project\n" \
-        "(Q)uit"
+
+MENU = "(L)oad projects\n" \
+       "(S)ave projects\n" \
+       "(D)isplay projects\n" \
+       "(F)ilter projects by date\n" \
+       "(A)dd new project\n" \
+       "(U)pdate project\n" \
+       "(Q)uit"
 
 FILENAME = 'projects.txt'
 
+
 def main():
+    """Print main-menu and facilitate user input to call desired function"""
     projects = []
     print(MENU)
     choice = input(">>>").upper()
@@ -20,7 +23,7 @@ def main():
             projects = load_projects(FILENAME)
             print("Project loaded")
         elif choice == 'S':
-            pass
+            save_projects(projects)
         elif choice == 'D':
             display_projects(projects)
         elif choice == 'F':
@@ -34,6 +37,7 @@ def main():
         print(MENU)
         choice = input(">>>").upper()
     print('Goodbye')
+
 
 def load_projects(FILENAME):
     """Reads .txt file and return class attributes for each project"""
@@ -49,6 +53,7 @@ def load_projects(FILENAME):
             projects.append(project)
         return projects
 
+
 def display_projects(projects):
     """Displays completed and incomplete projects"""
     completed_projects = sorted([project for project in projects if project.completion_percentage == 100])
@@ -62,6 +67,7 @@ def display_projects(projects):
     for project in incomplete_projects:
         print(f"  {project}")
 
+
 def filter_projects(projects):
     """Filters projects by projects after the user specified date"""
     start_date = input("Display projects that start after date (dd/mm/yyyy): ")
@@ -70,6 +76,7 @@ def filter_projects(projects):
 
     for project in filtered_projects:
         print(project)
+
 
 def add_project(projects):
     """Add project to the projects list through user input"""
@@ -82,7 +89,9 @@ def add_project(projects):
     project = Project(name, start_date, priority, cost_estimate, completion_percentage)
     projects.append(project)
 
+
 def update_project(projects):
+    """Updates projects based on user input"""
     for i, project in enumerate(projects):
         print(f"{i}. {project}")
     update_choice = int(input("Project choice: "))
@@ -97,6 +106,17 @@ def update_project(projects):
 
         new_priority = int(input("New priority: "))
         selected_project.priority = new_priority
+
+
+def save_projects(projects):
+    """Write projects data to a file"""
+    with open(FILENAME, 'w') as out_file:
+        print("Name\tStart Date\tPriority\tCost Estimate\tCompletion Percentage", file=out_file)
+        for project in projects:
+            print(
+                f"{project.name}\t{project.start_date.strftime('%d/%m/%Y')}\t{project.priority}\t{project.estimate}\t{project.completion}",
+                file=out_file)
+
 
 if __name__ == '__main__':
     main()
