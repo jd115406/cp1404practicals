@@ -1,3 +1,4 @@
+from prac_07 import project
 from prac_07.project import Project
 from datetime import datetime
 MENU =  "(L)oad projects\n" \
@@ -60,6 +61,24 @@ def display_projects(projects):
     print("Incomplete projects:")
     for project in incomplete_projects:
         print(f"  {project}")
+
+def filter_projects(projects):
+    start_date = input("Display projects that start after date (dd/mm/yyyy): ")
+    start_date = datetime.strptime(start_date, '%d/%m/%Y').date()
+    filtered_projects = sorted([project for project in projects if project.start_date >= start_date])
+
+    for project in filtered_projects:
+        print(project)
+
+def add_project(projects):
+    print("To add a new project input the following details:")
+    name = input("Name: ").title()
+    start_date = input("Start date (dd/mm/yyyy): ")
+    priority = int(input("Priority: "))
+    cost_estimate = float(input("Cost estimate: "))
+    completion_percentage = float(input("Completion percentage: "))
+    project = Project(name, start_date, priority, cost_estimate, completion_percentage)
+    projects.append(project)
 
 if __name__ == '__main__':
     main()
