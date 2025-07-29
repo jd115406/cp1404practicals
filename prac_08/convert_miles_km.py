@@ -31,7 +31,7 @@ class MilesConverterApp(App):
         self.root.ids.output_label.text = str(result)
 
     def handle_increment(self, change):
-        """Increment input by desired value"""
+        """Increment input by desired change"""
         value = self.get_valid_input() + change
         self.root.ids.input_miles.text = str(value)
         self.handle_calculate()
