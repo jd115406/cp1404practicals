@@ -12,6 +12,7 @@ class UnreliableCar(Car):
         self.reliability = reliability
 
     def drive(self, distance):
+        """Driver the car, based on reliability"""
         random_reliability = randint(1,100)
         if random_reliability >= self.reliability:
             distance = 0
